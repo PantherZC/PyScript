@@ -168,19 +168,52 @@ class sort:
                 z+=1
         print(L)
 
+
+    def shell_sort(self,lists):
+        # 希尔排序
+        count = len(lists)
+        step = 2
+        group = count / step
+        print 'group=',group
+        while group > 0:
+            for i in range(0, group):
+                j = i + group
+                while j < count:
+                    k = j - group
+                    key = lists[j]
+                    print i,j,k,key
+                    while k >= 0:
+                        if lists[k] > key:
+                            lists[k + group] = lists[k]
+                            lists[k] = key
+                        k -= group
+                    j += group
+
+                    print lists
+            group /= step
+            print 'end ',i,j,k,group
+            print '---'
+        print lists
+
 a = sort()
+l = [3,2,4,1]
+print('原始数组'),l
+print('希尔排序')
+a.shell_sort(l)
+
+
+
 '''
 l = [3,2,5,7,1,9]
 print('原始数组'),l
-print(l)
 print('选择排序')
 a.selectSort(l)
-'''
+
 l2 = [9,2,5,7,1,3]
 print('原始数组'),l2
 print('插入排序')
 a.insertSort(l2)
-'''
+
 print('冒泡排序')
 l3 = [3,2,5,7,1,9]
 a.bubbleSort(l3)
