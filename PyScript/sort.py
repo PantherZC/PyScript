@@ -4,6 +4,7 @@
 import math
 
 class sort:
+    #选择排序
     def selectSort(self,L):
         for i in range(0,len(L)-1):
             index = i
@@ -13,6 +14,7 @@ class sort:
             L[i], L[index] = L[index], L[i]
             print(L)
 
+    #插入排序
     def insertSort(self,L):
         for i in range(1,len(L)):
             fv = L[i]
@@ -26,15 +28,36 @@ class sort:
             L[j] = fv
             print(L)
 
+    #冒泡排序
     def bubbleSort(self,L):
         size = len(L)
-        for i in range(size-1,-1,-1):
-            for j in range(0,i-1): #这里需要注意下，重新看下是否符合，感觉怪怪的
+        for i in range(size-1):
+            # 这个循环负责设置冒泡排序进行的次数
+            for j in range(0,size-i-1): # ｊ为列表下标
+                print i,j
                 if L[j]>L[j+1]:
-                    temp = L[j]
-                    L[j]=L[j+1]
-                    L[j+1] = temp
+                    L[j],L[j+1] = L[j+1],L[j]
             print(L)
+
+    #快速排序
+    def quick_Sort(self,L,left,right):
+        i = left #基准位
+        j = right #监测起点
+        middle = L[left] #基准值
+        while i<j:
+            while L[j]<middle and i<j:
+                j -= 1
+            while L[i]>=middle and i<j:
+                i += 1
+            if i<j: #命中一对
+                L[i],L[j] = L[j],L[i]
+            else: #i与j相遇，交换基准值
+                L[left],L[j] = L[j],L[left]
+        if left < i:
+            self.quick_Sort(L,left,i-1)
+        if right > j:
+            self.quick_Sort(L,j+1,right)
+        return L
 
     def merge(self,L1,L2):
         L=[]
@@ -79,25 +102,9 @@ class sort:
             self.mergeSort(L,mid+1,last)
             self.mergeInL(L,first,mid,last)
     #代码简洁效率高~~改天实现改进版的
-    def quickSort(self,L,left,right):
-        i = left
-        j = right
-        middle = L[left]
-        while i<=j:
-            while L[i]<middle and i<right:
-                i += 1
-            while L[j]>middle and j>left:
-                j -= 1
-            if i<=j: #命中一对
-                temp = L[i]
-                L[i] = L[j]
-                L[j] = temp
-                i += 1
-                j += 1
-        if left<j:
-            self.quickSort(L,left,j)
-        if right > i:
-            self.quickSort(L,i,right)
+
+
+
     def __bucketInit(self):
         l0 = []
         l1 = []
@@ -196,14 +203,12 @@ class sort:
         print lists
 
 a = sort()
+'''
 l = [3,2,4,1]
 print('原始数组'),l
 print('希尔排序')
 a.shell_sort(l)
 
-
-
-'''
 l = [3,2,5,7,1,9]
 print('原始数组'),l
 print('选择排序')
@@ -216,6 +221,7 @@ a.insertSort(l2)
 
 print('冒泡排序')
 l3 = [3,2,5,7,1,9]
+print('原始数组'),l3
 a.bubbleSort(l3)
 
 print('列表归并算法 没有问题')
@@ -226,10 +232,14 @@ print('归并排序')
 lm = [3,2,5,7,1,9]
 a.mergeSort(lm,0,5)
 print(lm)
+'''
+
 print('快速排序')
 lq = [3,2,5,7,1,9]
-a.quickSort(lq,0,5)
-print(lq)
+print('原始数组'),lq
+print a.quick_Sort(lq,0,5)
+
+'''
 print('基数排序')
 lr = [3,20,5,713,1,9]
 print(lr)
